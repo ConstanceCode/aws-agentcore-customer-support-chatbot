@@ -1,0 +1,46 @@
+{
+  "jobName": "support-chatbot-evaluation-v4",
+  "jobDescription": "LLM-as-a-judge evaluation of the customer support chatbot",
+  "applicationType": "ModelEvaluation",
+  "roleArn": "arn:aws:iam::064658698196:role/bedrock-eval-role",
+  "evaluationConfig": {
+    "automated": {
+      "datasetMetricConfigs": [
+        {
+          "taskType": "General",
+          "dataset": {
+            "name": "support_chatbot_dataset",
+            "datasetLocation": {
+              "s3Uri": "s3://udacity-agentic-engineer-c1-eval-064658698196/output_eval_dataset.jsonl"
+            }
+          },
+          "metricNames": [
+            "Builtin.Correctness"
+          ]
+        }
+      ],
+      "evaluatorModelConfig": {
+        "bedrockEvaluatorModels": [
+          {
+            "modelIdentifier": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-pro-v1:0"
+          }
+        ]
+      }
+    }
+  },
+  "inferenceConfig": {
+    "models": [
+      {
+        "precomputedInferenceSource": {
+          "inferenceSourceIdentifier": "my-support-chatbot"
+        }
+      }
+    ]
+  },
+  "outputDataConfig": {
+    "s3Uri": "s3://udacity-agentic-engineer-c1-eval-064658698196/evaluation-results/"
+  }
+}
+
+
+
